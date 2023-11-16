@@ -1,0 +1,56 @@
+./simglucose/analysis/report.py
+    26,29,30,36,37,88,130       Changed colours of plots such that reds, greens, and blues correspond to hyperglycemia, euglycemia, and hypoglycemia respectively
+    41,90,131,244               Fixed location of legends to top right 
+    77-87                       Reordered blood glucose bar chart bars with respect to blood glucose level
+
+./simglucose/analysis/risk.py
+    5-15                        Corrected Clarke Risk Index such that 0 blood glucose does not give 0 risk
+    17-28                       Created Magni Risk Index function
+
+./simglucose/controller/basal_bolus_ctrller.py
+    26                          Removed reward and done parameters and renamed policy functon to select_action for consistency
+
+./simglucose/controller/base.py
+    11                          Removed reward and done parameters and renamed policy functon to select_action for consistency
+
+./simglucose/controller/pid_ctrller
+    9                           Changed blood glucose target to 112
+    17                          Removed reward and done parameters and renamed policy to select_action for consistency
+    19                          Provided sample time as part of the observation
+    25                          Check if self.prev_state is -1 to force set the previous state to the current blood glucose at the start of simulation
+    40                          Don't split action into basal and bolus for consistency
+    45                          Changed self.prev_state from 0 to -1 so that the first blood glucose reading isn't incorrectly given as 0
+
+./simglucose/envs/simglucose_gym_env.py
+    27-71                       Redefined environment with respect to our hyperparameters
+    73-77                       Created linear normalisation function
+    79-117                      Created get_state function to create (and normalise) our custom state space
+    119-131                     Updated step function to normalise action and to return custom state
+    133-135                     Updated reset function to reset environment with respect to custom scenario and to return custom state
+    148                         Added option for a pre-specified simulation start time
+    151                         Added parameters for our new meal scenarios
+    154                         Added a pre-specified risk metric to simenv (Clarke or Magni)
+    159-160                     Created show history function for results
+    162-164                     Created env_time property for simulation
+    168                         Set action space upper bound to max insulin parameter
+    173                         Set state space dimensions to our custom state space length
+
+./simglucose/params/Quest.csv
+                                Added patient heights given by the average heigh with respect to the patient's age 
+
+./simglucose/simulation/env.py
+    26                          Removed default risk_diff reward
+    28,33,58,77,78,93,116,117   Added choice of Clarke and Magni risk indices
+    94                          Adjusted episode termination bounds from <70, >350 to <50, >350
+    124,125                     Corrected initialisation of CHO and insulin hist lists
+
+./simglucose/simulation/scenario_gen.py
+    11-17                       Added parameters for our meal scenarios
+    38-50                       Added Harris Benedict meal scenario
+    62-77                       Added logic to select meal scenario
+
+./simglucose/simulation/sim_engine.py
+    31,33,36,48                 Edited simulation function to respect our environent and agent changes
+    56                          Removed simulation print outs
+    70                          Added tqdm progress bar to batch simulation
+    
